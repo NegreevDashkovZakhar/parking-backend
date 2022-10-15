@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -13,7 +14,7 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne(targetEntity = Car.class)
+    @OneToOne(targetEntity = Car.class)
     private Long carId;
     @ManyToOne(targetEntity = ParkingLot.class)
     private Long lotId;
