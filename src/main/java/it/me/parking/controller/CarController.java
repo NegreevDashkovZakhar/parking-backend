@@ -97,8 +97,12 @@ public class CarController {
      * @param licensePlateNumber license plate number of the car
      * @return car entity with specified license plate number
      */
-    public Car getCarByLicensePlateNumber(String licensePlateNumber) {
-        return carService.getCarByLicensePlateNumber(licensePlateNumber);
+    public Car getCarByLicensePlateNumber(@PathVariable String licensePlateNumber) {
+        try {
+            return carService.getCarByLicensePlateNumber(licensePlateNumber);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
+        }
     }
 
     /**
