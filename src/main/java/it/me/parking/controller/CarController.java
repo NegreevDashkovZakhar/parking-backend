@@ -8,6 +8,7 @@ import it.me.parking.model.request.CarRequest;
 import it.me.parking.service.ICarService;
 import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,6 +82,7 @@ public class CarController {
      *
      * @param id id of the car
      */
+    @DeleteMapping(path = "/cars/{id}")
     public void deleteCarById(@PathVariable Long id) {
         try {
             carService.deleteCarById(id);
