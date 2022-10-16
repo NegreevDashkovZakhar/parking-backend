@@ -13,8 +13,9 @@ public class ParkingLot {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String locationSign;
+    @Column(nullable = false)
     private Long hourPrice;
 
     /**

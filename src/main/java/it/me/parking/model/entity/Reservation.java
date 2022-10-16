@@ -1,5 +1,6 @@
 package it.me.parking.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,12 +19,16 @@ public class Reservation {
     @GeneratedValue
     private Long id;
     @OneToOne(targetEntity = Car.class)
+    @Column(nullable = false)
     private Long carId;
     @ManyToOne(targetEntity = ParkingLot.class)
+    @Column(nullable = false)
     private Long lotId;
     @Temporal(TemporalType.TIME)
+    @Column(nullable = false)
     private Date startTime;
     @Temporal(TemporalType.TIME)
+    @Column(nullable = false)
     private Date endTime;
 
     /**
