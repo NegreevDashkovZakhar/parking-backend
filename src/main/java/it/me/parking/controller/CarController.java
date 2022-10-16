@@ -1,14 +1,21 @@
 package it.me.parking.controller;
 
+import it.me.parking.exception.AlreadyExistsHttpException;
+import it.me.parking.exception.InvalidRequestHttpException;
+import it.me.parking.exception.NotFoundHttpException;
 import it.me.parking.model.entity.Car;
 import it.me.parking.model.request.CarRequest;
 import it.me.parking.service.ICarService;
+import org.hibernate.PropertyValueException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.NoSuchElementException;
 
 /**
  * Controller passing arguments from requests to car service
@@ -44,7 +51,11 @@ public class CarController {
      */
     @GetMapping(path = "/cars/{id}")
     public Car getCarById(@PathVariable("id") Long id) {
-        return carService.getCarById(id);
+        try {
+            return carService.getCarById(id);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
+        }
     }
 
     /**
@@ -56,7 +67,13 @@ public class CarController {
     @PutMapping(path = "/cars/{id}")
     public void updateCar(@PathVariable("id") Long id,
                           @RequestBody CarRequest newCarData) {
-        carService.updateCar(id, newCarData);
+        try {
+            carService.updateCar(id, newCarData);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
+        } catch (PropertyValueException e) {
+            throw new InvalidRequestHttpException(e);
+        }
     }
 
     /**
@@ -85,6 +102,12 @@ public class CarController {
      */
     @PostMapping(path = "car")
     public void addCar(@RequestBody CarRequest car) {
-        carService.addCar(car);
+        try {
+            carService.addCar(car);
+        } catch (PropertyValueException e) {
+            throw new InvalidRequestHttpException(e);
+        } catch (DataIntegrityViolationException e) {
+            throw new AlreadyExistsHttpException(e);
+        }
     }
 }
