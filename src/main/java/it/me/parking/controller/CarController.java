@@ -66,7 +66,7 @@ public class CarController {
      * @param newCarData object containing new properties for the car
      */
     @PutMapping(path = "/cars/{id}")
-    public void updateCar(@PathVariable("id") Long id,
+    public void updateCar(@PathVariable Long id,
                           @RequestBody CarRequest newCarData) {
         try {
             carService.updateCar(id, newCarData);
