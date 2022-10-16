@@ -81,8 +81,12 @@ public class CarController {
      *
      * @param id id of the car
      */
-    public void deleteCarById(Long id) {
-        carService.deleteCarById(id);
+    public void deleteCarById(@PathVariable Long id) {
+        try {
+            carService.deleteCarById(id);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
+        }
     }
 
     /**
