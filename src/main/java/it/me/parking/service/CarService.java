@@ -3,6 +3,7 @@ package it.me.parking.service;
 import it.me.parking.model.entity.Car;
 import it.me.parking.model.request.CarRequest;
 import it.me.parking.repository.CarRepository;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,8 +50,7 @@ public class CarService implements ICarService {
 
     @Override
     public Car getCarByLicensePlateNumber(String licensePlateNumber) {
-        return null;
-//        return repository.getCarByLicensePlateNumber(licensePlateNumber);
+        throw new NotYetImplementedException();
     }
 
     @Override
