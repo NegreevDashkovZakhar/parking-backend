@@ -97,7 +97,7 @@ public class CarController {
      * @param licensePlateNumber license plate number of the car
      * @return car entity with specified license plate number
      */
-    @GetMapping(path = "cars/license-plate/{licensePlateNumber}")
+    @GetMapping(path = "/cars/license-plate/{licensePlateNumber}")
     public Car getCarByLicensePlateNumber(@PathVariable String licensePlateNumber) {
         try {
             return carService.getCarByLicensePlateNumber(licensePlateNumber);
@@ -111,7 +111,7 @@ public class CarController {
      *
      * @param car object containing properties of the new car
      */
-    @PostMapping(path = "car")
+    @PostMapping(path = "/car")
     public void addCar(@RequestBody CarRequest car) {
         try {
             carService.addCar(car);
