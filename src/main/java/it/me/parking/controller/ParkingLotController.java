@@ -51,7 +51,7 @@ public class ParkingLotController {
      * @return parking lot entity with specified id
      */
     @GetMapping(path = "/parking-lots/{id}")
-    public ParkingLot getParkingLotById(@PathVariable("id") Long id) {
+    public ParkingLot getParkingLotById(@PathVariable Long id) {
         try {
             return parkingLotService.getParkingLotById(id);
         } catch (NoSuchElementException e) {

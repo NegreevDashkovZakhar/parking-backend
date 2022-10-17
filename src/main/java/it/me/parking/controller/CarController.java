@@ -51,7 +51,7 @@ public class CarController {
      * @return car entity with specified id
      */
     @GetMapping(path = "/cars/{id}")
-    public Car getCarById(@PathVariable("id") Long id) {
+    public Car getCarById(@PathVariable Long id) {
         try {
             return carService.getCarById(id);
         } catch (NoSuchElementException e) {
