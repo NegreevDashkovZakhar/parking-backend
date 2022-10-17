@@ -3,8 +3,9 @@ package it.me.parking.service;
 import it.me.parking.model.entity.Car;
 import it.me.parking.model.request.CarRequest;
 import it.me.parking.repository.CarRepository;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 /**
  * Default car service interface implementation
@@ -50,7 +51,11 @@ public class CarService implements ICarService {
 
     @Override
     public Car getCarByLicensePlateNumber(String licensePlateNumber) {
-        throw new NotYetImplementedException();
+        Car specifiedCar = repository.getCarByLicensePlateNumber(licensePlateNumber);
+        if (specifiedCar == null) {
+            throw new NoSuchElementException("Car with specified license plate number does not exist.");
+        }
+        return specifiedCar;
     }
 
     @Override
