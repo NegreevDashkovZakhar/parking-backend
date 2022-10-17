@@ -4,12 +4,14 @@ import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.request.ParkingLotRequest;
 import it.me.parking.repository.ParkingLotRepository;
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.stereotype.Service;
 
 /**
  * Default parking lot service interface implementation
  *
  * @see it.me.parking.service.IParkingLotService
  */
+@Service
 public class ParkingLotService implements IParkingLotService {
     private final ParkingLotRepository repository;
 
