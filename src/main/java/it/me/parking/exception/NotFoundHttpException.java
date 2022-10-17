@@ -1,13 +1,13 @@
 package it.me.parking.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Exception class thrown when requested resource was not found.
  * Http code:404
  */
-public class NotFoundHttpException extends HttpStatusCodeException {
+public class NotFoundHttpException extends ResponseStatusException {
     /**
      * Constructor setting http code and default message
      */

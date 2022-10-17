@@ -1,13 +1,13 @@
 package it.me.parking.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Exception class thrown when invalid request received.
  * Http code:400
  */
-public class InvalidRequestHttpException extends HttpStatusCodeException {
+public class InvalidRequestHttpException extends ResponseStatusException {
     /**
      * Constructor setting http code and default message
      */
