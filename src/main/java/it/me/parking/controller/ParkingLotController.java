@@ -111,8 +111,8 @@ public class ParkingLotController {
      *
      * @param parkingLot object containing properties of the new parking lot
      */
-    @PostMapping(path = "/parking-lots")
-    public void addCar(@RequestBody ParkingLotRequest parkingLot) {
+    @PostMapping(path = "/parking-lot")
+    public void addParkingLot(@RequestBody ParkingLotRequest parkingLot) {
         try {
             parkingLotService.addParkingLot(parkingLot);
         } catch (PropertyValueException e) {
