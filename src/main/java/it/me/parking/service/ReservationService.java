@@ -45,8 +45,12 @@ public class ReservationService implements IReservationService {
     @Override
     public void updateReservation(Long id, ReservationRequest newReservationData) {
         Reservation oldReservation = repository.findById(id).orElseThrow();
-        oldReservation.setCarId(newReservationData.getCarId());
-        oldReservation.setLotId(newReservationData.getLotId());
+        oldReservation.setCar(
+                carRepository.findById(newReservationData.getCarId()).orElseThrow()
+        );
+        oldReservation.setLot(
+                lotRepository.findById(newReservationData.getLotId()).orElseThrow()
+        );
         oldReservation.setStartTime(newReservationData.getStartTime());
         oldReservation.setEndTime(newReservationData.getEndTime());
         repository.save(oldReservation);
