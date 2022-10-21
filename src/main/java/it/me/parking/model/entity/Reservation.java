@@ -4,10 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
@@ -18,13 +16,12 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne(targetEntity = Car.class)
-    @Column(nullable = false)
-    private Long carId;
-    @ManyToOne(targetEntity = ParkingLot.class)
-    @Column(nullable = false)
-    private Long lotId;
-    @Temporal(TemporalType.TIME)
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Car car;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private ParkingLot lot;
     @Column(nullable = false)
     private Date startTime;
     @Temporal(TemporalType.TIME)
@@ -42,31 +39,14 @@ public class Reservation {
      * Constructor setting all fields except for reservation id
      * id is generated automatically
      *
-     * @param carId     id of the car that will be parked
-     * @param lotId     id of the lot used for parking
+     * @param car       car that will be parked
+     * @param lot       lot used for parking
      * @param startTime lot reservation starting time
      * @param endTime   lot reservation ending time
      */
-    public Reservation(Long carId, Long lotId, Date startTime, Date endTime) {
-        this.carId = carId;
-        this.lotId = lotId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    /**
-     * Constructor setting all fields
-     *
-     * @param id        id of the reservation entity
-     * @param carId     id of the car that will be parked
-     * @param lotId     id of the lot used for parking
-     * @param startTime lot reservation starting time
-     * @param endTime   lot reservation ending time
-     */
-    public Reservation(Long id, Long carId, Long lotId, Date startTime, Date endTime) {
-        this.id = id;
-        this.carId = carId;
-        this.lotId = lotId;
+    public Reservation(Car car, ParkingLot lot, Date startTime, Date endTime) {
+        this.car = car;
+        this.lot = lot;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -79,20 +59,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public Long getCarId() {
-        return carId;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
-    public Long getLotId() {
-        return lotId;
+    public ParkingLot getLot() {
+        return lot;
     }
 
-    public void setLotId(Long lotId) {
-        this.lotId = lotId;
+    public void setLot(ParkingLot lot) {
+        this.lot = lot;
     }
 
     public Date getStartTime() {

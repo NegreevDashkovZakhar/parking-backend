@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 /**
  * Class representing Client/Car in database
@@ -19,6 +21,9 @@ public class Car {
     private String ownerName;
     @Column(nullable = false)
     private String model;
+
+    @OneToMany(mappedBy = "car")
+    private Set<Reservation> reservations;
 
     /**
      * Constructor not setting any fields

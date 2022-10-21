@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 /**
  * Class representing Parking lot in database
@@ -17,6 +19,9 @@ public class ParkingLot {
     private String locationSign;
     @Column(nullable = false)
     private Long hourPrice;
+
+    @OneToMany(mappedBy = "lot")
+    private Set<Reservation> reservations;
 
     /**
      * Constructor not setting any fields
