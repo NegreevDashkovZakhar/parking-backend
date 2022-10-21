@@ -51,7 +51,7 @@ public class ReservationController {
      * @return reservation entity with specified id
      */
     @GetMapping(path = "/reservations/{id}")
-    public Reservation getCarById(@PathVariable Long id) {
+    public Reservation getReservationById(@PathVariable Long id) {
         try {
             return reservationService.getReservationById(id);
         } catch (NoSuchElementException e) {
@@ -66,13 +66,13 @@ public class ReservationController {
      * @param newReservationData object containing new properties for the reservation
      */
     @PutMapping(path = "/reservations/{id}")
-    public void updateCar(@PathVariable Long id,
-                          @RequestBody ReservationRequest newReservationData) {
+    public void updateReservation(@PathVariable Long id,
+                                  @RequestBody ReservationRequest newReservationData) {
         try {
             reservationService.updateReservation(id, newReservationData);
         } catch (NoSuchElementException e) {
             throw new NotFoundHttpException(e);
-        } catch (PropertyValueException e) {
+        } catch (PropertyValueException | IllegalArgumentException e) {
             throw new InvalidRequestHttpException(e);
         }
     }
