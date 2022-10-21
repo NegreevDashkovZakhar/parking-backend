@@ -96,7 +96,7 @@ public class ReservationController {
      *
      * @param reservation object containing properties of the new reservation
      */
-    @PostMapping(path = "/car")
+    @PostMapping(path = "/reservation")
     public void addReservation(@RequestBody ReservationRequest reservation) {
         try {
             reservationService.addReservation(reservation);
