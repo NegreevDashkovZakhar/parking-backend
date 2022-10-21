@@ -1,5 +1,7 @@
 package it.me.parking.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +25,10 @@ public class Reservation {
     @JoinColumn(nullable = false)
     private ParkingLot lot;
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     /**
