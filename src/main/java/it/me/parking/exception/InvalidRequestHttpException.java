@@ -17,8 +17,19 @@ public class InvalidRequestHttpException extends ResponseStatusException {
 
     /**
      * Constructor setting http code and default message extended with cause message
+     *
+     * @param cause cause of this exception
      */
     public InvalidRequestHttpException(Throwable cause) {
         super(HttpStatus.BAD_REQUEST, "Invalid Request given. Cause:" + cause.getMessage());
+    }
+
+    /**
+     * Constructor setting http code and specified message
+     *
+     * @param message specified exception message
+     */
+    public InvalidRequestHttpException(String message) {
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }
