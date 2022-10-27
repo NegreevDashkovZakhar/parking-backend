@@ -1,5 +1,6 @@
 package it.me.parking.service;
 
+import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.model.entity.Reservation;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.repository.CarRepository;
@@ -45,6 +46,7 @@ public class ReservationService implements IReservationService {
     @Override
     public void updateReservation(Long id, ReservationRequest newReservationData) {
         Reservation oldReservation = repository.findById(id).orElseThrow();
+        validateRequest(newReservationData);
         oldReservation.setCar(
                 carRepository.findById(newReservationData.getCarId()).orElseThrow()
         );
@@ -63,11 +65,19 @@ public class ReservationService implements IReservationService {
 
     @Override
     public void addReservation(ReservationRequest reservation) {
+        validateRequest(reservation);
         repository.save(new Reservation(
                 carRepository.findById(reservation.getCarId()).orElseThrow(),
                 lotRepository.findById(reservation.getLotId()).orElseThrow(),
                 reservation.getStartTime(),
                 reservation.getEndTime()
         ));
+    }
+
+    private void validateRequest(ReservationRequest reservationRequest) {
+        int startTimeSeconds = (int) (reservationRequest.getStartTime().getTime() % 60000);
+        int endTimeSeconds = (int) (reservationRequest.getEndTime().getTime() % 60000);
+        if (startTimeSeconds != 0 || endTimeSeconds != 0)
+            throw new InvalidRequestHttpException("Reservation time must not contain seconds time");
     }
 }
