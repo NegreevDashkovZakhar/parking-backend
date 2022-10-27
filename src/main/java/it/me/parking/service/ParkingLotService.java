@@ -3,7 +3,6 @@ package it.me.parking.service;
 import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.request.ParkingLotRequest;
 import it.me.parking.repository.ParkingLotRepository;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,7 +48,7 @@ public class ParkingLotService implements IParkingLotService {
 
     @Override
     public ParkingLot getParkingLotByLocation(String location) {
-        throw new NotYetImplementedException();
+        return repository.getParkingLotByLocation(location);
     }
 
     @Override
