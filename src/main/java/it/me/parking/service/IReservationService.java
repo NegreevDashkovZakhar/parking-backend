@@ -1,7 +1,11 @@
 package it.me.parking.service;
 
+import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
+import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+
+import java.util.List;
 
 /**
  * Interface for service manipulating reservation entities in database
@@ -43,4 +47,12 @@ public interface IReservationService {
      * @param reservation object with properties of the new car
      */
     void addReservation(ReservationRequest reservation);
+
+    /**
+     * Method getting available parking lots for specified time
+     *
+     * @param freeParkingLotsRequest request with specified time to search available parking lots
+     * @return available parking lots for specified time
+     */
+    List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest);
 }
