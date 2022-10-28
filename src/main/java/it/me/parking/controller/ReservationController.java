@@ -3,7 +3,9 @@ package it.me.parking.controller;
 import it.me.parking.exception.AlreadyExistsHttpException;
 import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.exception.NotFoundHttpException;
+import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
+import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.service.IReservationService;
 import org.hibernate.PropertyValueException;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -105,5 +108,16 @@ public class ReservationController {
         } catch (DataIntegrityViolationException e) {
             throw new AlreadyExistsHttpException(e);
         }
+    }
+
+    /**
+     * Method getting available parking lots for specific time
+     *
+     * @param parkingLotsRequest request specifying time to find available parking lots
+     * @return available parking lots for specific time
+     */
+    @GetMapping(path = "/reservations/available")
+    public List<ParkingLot> getFreeParkingLots(@RequestBody FreeParkingLotsRequest parkingLotsRequest) {
+        return reservationService.getFreeParkingLots(parkingLotsRequest);
     }
 }
