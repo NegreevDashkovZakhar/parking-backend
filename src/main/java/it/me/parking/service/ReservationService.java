@@ -1,12 +1,18 @@
 package it.me.parking.service;
 
 import it.me.parking.exception.InvalidRequestHttpException;
+import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
+import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.repository.CarRepository;
 import it.me.parking.repository.ParkingLotRepository;
 import it.me.parking.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Default reservation service interface implementation
@@ -72,6 +78,23 @@ public class ReservationService implements IReservationService {
                 reservation.getStartTime(),
                 reservation.getEndTime()
         ));
+    }
+
+    @Override
+    public List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest) {
+        //TODO simplify algorithm
+        List<BigInteger> usedReservations = repository.getReservedLotsId(
+                freeParkingLotsRequest.getStartTime(),
+                freeParkingLotsRequest.getEndTime()
+        );
+        Iterable<ParkingLot> allParkingLots = lotRepository.findAll();
+        List<ParkingLot> freeParkingLots = new ArrayList<>();
+        for (ParkingLot parkingLot : allParkingLots) {
+            if (!usedReservations.contains(BigInteger.valueOf(parkingLot.getId()))) {
+                freeParkingLots.add(parkingLot);
+            }
+        }
+        return freeParkingLots;
     }
 
     private void validateRequest(ReservationRequest reservationRequest) {
