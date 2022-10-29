@@ -7,6 +7,7 @@ import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
 import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.service.IReservationService;
 import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -119,5 +120,20 @@ public class ReservationController {
     @GetMapping(path = "/reservations/available")
     public List<ParkingLot> getFreeParkingLots(@RequestBody FreeParkingLotsRequest parkingLotsRequest) {
         return reservationService.getFreeParkingLots(parkingLotsRequest);
+    }
+
+    /**
+     * Method getting bill for specified reservation
+     *
+     * @param id id of the reservation
+     * @return bill for specified reservation
+     */
+    @GetMapping(path = "reservations/{id}/bill")
+    public ReservationBillResponse getReservationBill(@PathVariable long id) {
+        try {
+            return reservationService.getReservationBill(id);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
+        }
     }
 }

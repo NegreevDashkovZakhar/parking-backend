@@ -5,6 +5,7 @@ import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
 import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.repository.CarRepository;
 import it.me.parking.repository.ParkingLotRepository;
 import it.me.parking.repository.ReservationRepository;
@@ -93,6 +94,11 @@ public class ReservationService implements IReservationService {
             availableParkingLots.add(lotRepository.findById(availableId).orElseThrow());
         }
         return availableParkingLots;
+    }
+
+    @Override
+    public ReservationBillResponse getReservationBill(long id) {
+        return new ReservationBillResponse(repository.findById(id).orElseThrow());
     }
 
     private void validateRequest(ReservationRequest reservationRequest) {

@@ -4,6 +4,7 @@ import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
 import it.me.parking.model.request.FreeParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+import it.me.parking.model.response.ReservationBillResponse;
 
 import java.util.List;
 
@@ -55,4 +56,12 @@ public interface IReservationService {
      * @return available parking lots for specified time
      */
     List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest);
+
+    /**
+     * Method getting bill for specified reservation
+     *
+     * @param id id of the reservation
+     * @return bill for specified reservation
+     */
+    ReservationBillResponse getReservationBill(long id);
 }
