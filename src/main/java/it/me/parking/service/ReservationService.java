@@ -71,6 +71,9 @@ public class ReservationService implements IReservationService {
     @Override
     public void addReservation(ReservationRequest reservation) {
         validateRequest(reservation);
+        if (!isAvailableForReservation(reservation)) {
+            throw new InvalidRequestHttpException("Time is already reserved");
+        }
         repository.save(new Reservation(
                 carRepository.findById(reservation.getCarId()).orElseThrow(),
                 lotRepository.findById(reservation.getLotId()).orElseThrow(),
@@ -97,5 +100,13 @@ public class ReservationService implements IReservationService {
         int endTimeSeconds = (int) (reservationRequest.getEndTime().getTime() % 60000);
         if (startTimeSeconds != 0 || endTimeSeconds != 0)
             throw new InvalidRequestHttpException("Reservation time must not contain seconds time");
+    }
+
+    private boolean isAvailableForReservation(ReservationRequest reservationRequest) {
+        List<Long> availableParkingLotsIds = repository.getFreeParkingLots(
+                reservationRequest.getStartTime(),
+                reservationRequest.getEndTime()
+        );
+        return availableParkingLotsIds.contains(reservationRequest.getLotId());
     }
 }
