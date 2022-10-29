@@ -10,7 +10,6 @@ import it.me.parking.repository.ParkingLotRepository;
 import it.me.parking.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,19 +81,15 @@ public class ReservationService implements IReservationService {
 
     @Override
     public List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest) {
-        //TODO simplify algorithm
-        List<BigInteger> usedReservations = repository.getReservedLotsId(
+        List<Long> availableParkingLotsIds = repository.getFreeParkingLots(
                 freeParkingLotsRequest.getStartTime(),
                 freeParkingLotsRequest.getEndTime()
         );
-        Iterable<ParkingLot> allParkingLots = lotRepository.findAll();
-        List<ParkingLot> freeParkingLots = new ArrayList<>();
-        for (ParkingLot parkingLot : allParkingLots) {
-            if (!usedReservations.contains(BigInteger.valueOf(parkingLot.getId()))) {
-                freeParkingLots.add(parkingLot);
-            }
+        List<ParkingLot> availableParkingLots = new ArrayList<>();
+        for (Long availableId : availableParkingLotsIds) {
+            availableParkingLots.add(lotRepository.findById(availableId).orElseThrow());
         }
-        return freeParkingLots;
+        return availableParkingLots;
     }
 
     private void validateRequest(ReservationRequest reservationRequest) {
