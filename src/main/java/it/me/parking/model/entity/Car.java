@@ -1,5 +1,6 @@
 package it.me.parking.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Car {
     @Column(nullable = false)
     private String model;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
     private Set<Reservation> reservations;
 
     /**

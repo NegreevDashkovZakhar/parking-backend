@@ -1,5 +1,6 @@
 package it.me.parking.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class ParkingLot {
     @Column(nullable = false)
     private Long hourPrice;
 
-    @OneToMany(mappedBy = "lot")
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.REMOVE)
     private Set<Reservation> reservations;
 
     /**
