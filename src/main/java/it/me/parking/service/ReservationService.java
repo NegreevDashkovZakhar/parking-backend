@@ -45,12 +45,12 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation getReservationById(Long id) {
+    public Reservation getReservationById(long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void updateReservation(Long id, ReservationRequest newReservationData) {
+    public void updateReservation(long id, ReservationRequest newReservationData) {
         Reservation oldReservation = repository.findById(id).orElseThrow();
         validateRequest(newReservationData);
         oldReservation.setCar(
@@ -65,7 +65,7 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public void deleteReservationById(Long id) {
+    public void deleteReservationById(long id) {
         repository.deleteById(id);
     }
 

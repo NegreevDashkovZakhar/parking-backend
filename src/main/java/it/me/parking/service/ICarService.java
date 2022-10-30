@@ -20,7 +20,7 @@ public interface ICarService {
      * @param id id of the car
      * @return car with specified id
      */
-    Car getCarById(Long id);
+    Car getCarById(long id);
 
     /**
      * Method updating car properties with specified
@@ -28,14 +28,14 @@ public interface ICarService {
      * @param id         id of the changed car
      * @param newCarData object with new car properties
      */
-    void updateCar(Long id, CarRequest newCarData);
+    void updateCar(long id, CarRequest newCarData);
 
     /**
      * Method deleting car with specified id
      *
      * @param id id of the car
      */
-    void deleteCarById(Long id);
+    void deleteCarById(long id);
 
     /**
      * Method getting car with specified license plate number

@@ -29,12 +29,12 @@ public class ParkingLotService implements IParkingLotService {
     }
 
     @Override
-    public ParkingLot getParkingLotById(Long id) {
+    public ParkingLot getParkingLotById(long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void updateParkingLot(Long id, ParkingLotRequest newParkingLotData) {
+    public void updateParkingLot(long id, ParkingLotRequest newParkingLotData) {
         ParkingLot oldParkingLot = repository.findById(id).orElseThrow();
         oldParkingLot.setLocationSign(newParkingLotData.getLocationSign());
         oldParkingLot.setHourPrice(newParkingLotData.getHourPrice());
@@ -42,7 +42,7 @@ public class ParkingLotService implements IParkingLotService {
     }
 
     @Override
-    public void deleteParkingLotById(Long id) {
+    public void deleteParkingLotById(long id) {
         repository.deleteById(id);
     }
 

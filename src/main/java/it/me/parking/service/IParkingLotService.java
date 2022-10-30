@@ -20,7 +20,7 @@ public interface IParkingLotService {
      * @param id id of the parking lot
      * @return parking lot with specified id
      */
-    ParkingLot getParkingLotById(Long id);
+    ParkingLot getParkingLotById(long id);
 
     /**
      * Method updating parking lot properties with specified
@@ -28,14 +28,14 @@ public interface IParkingLotService {
      * @param id                id of the changed parking lot
      * @param newParkingLotData object with new parking lot properties
      */
-    void updateParkingLot(Long id, ParkingLotRequest newParkingLotData);
+    void updateParkingLot(long id, ParkingLotRequest newParkingLotData);
 
     /**
      * Method deleting parking lot with specified id
      *
      * @param id id of the parking lot
      */
-    void deleteParkingLotById(Long id);
+    void deleteParkingLotById(long id);
 
     /**
      * Method getting parking lot with specified location

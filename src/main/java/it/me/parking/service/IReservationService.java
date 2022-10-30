@@ -25,7 +25,7 @@ public interface IReservationService {
      * @param id id of the reservation
      * @return reservation with specified id
      */
-    Reservation getReservationById(Long id);
+    Reservation getReservationById(long id);
 
     /**
      * Method updating reservation properties with specified
@@ -33,14 +33,14 @@ public interface IReservationService {
      * @param id                 id of the changed reservation
      * @param newReservationData object with new reservation properties
      */
-    void updateReservation(Long id, ReservationRequest newReservationData);
+    void updateReservation(long id, ReservationRequest newReservationData);
 
     /**
      * Method deleting reservation with specified id
      *
      * @param id id of the reservation
      */
-    void deleteReservationById(Long id);
+    void deleteReservationById(long id);
 
     /**
      * Method adding reservation to database

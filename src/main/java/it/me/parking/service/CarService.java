@@ -31,12 +31,12 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public Car getCarById(long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void updateCar(Long id, CarRequest newCarData) {
+    public void updateCar(long id, CarRequest newCarData) {
         Car oldCar = repository.findById(id).orElseThrow();
         oldCar.setModel(newCarData.getModel());
         oldCar.setLicensePlateNumber(newCarData.getLicensePlateNumber());
@@ -45,7 +45,7 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public void deleteCarById(Long id) {
+    public void deleteCarById(long id) {
         repository.deleteById(id);
     }
 
