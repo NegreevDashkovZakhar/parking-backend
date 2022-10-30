@@ -3,7 +3,7 @@ package it.me.parking.service;
 import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
-import it.me.parking.model.request.FreeParkingLotsRequest;
+import it.me.parking.model.request.AvailableParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.repository.CarRepository;
@@ -84,10 +84,10 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest) {
-        List<Long> availableParkingLotsIds = repository.getFreeParkingLots(
-                freeParkingLotsRequest.getStartTime(),
-                freeParkingLotsRequest.getEndTime()
+    public List<ParkingLot> getAvailableParkingLots(AvailableParkingLotsRequest availableParkingLotsRequest) {
+        List<Long> availableParkingLotsIds = repository.getAvailableParkingLots(
+                availableParkingLotsRequest.getStartTime(),
+                availableParkingLotsRequest.getEndTime()
         );
         List<ParkingLot> availableParkingLots = new ArrayList<>();
         for (Long availableId : availableParkingLotsIds) {
@@ -109,7 +109,7 @@ public class ReservationService implements IReservationService {
     }
 
     private boolean isAvailableForReservation(ReservationRequest reservationRequest) {
-        List<Long> availableParkingLotsIds = repository.getFreeParkingLots(
+        List<Long> availableParkingLotsIds = repository.getAvailableParkingLots(
                 reservationRequest.getStartTime(),
                 reservationRequest.getEndTime()
         );

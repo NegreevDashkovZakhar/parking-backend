@@ -5,7 +5,7 @@ import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.exception.NotFoundHttpException;
 import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
-import it.me.parking.model.request.FreeParkingLotsRequest;
+import it.me.parking.model.request.AvailableParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.service.IReservationService;
@@ -118,8 +118,8 @@ public class ReservationController {
      * @return available parking lots for specific time
      */
     @GetMapping(path = "/reservations/available")
-    public List<ParkingLot> getFreeParkingLots(@RequestBody FreeParkingLotsRequest parkingLotsRequest) {
-        return reservationService.getFreeParkingLots(parkingLotsRequest);
+    public List<ParkingLot> getAvailableParkingLots(@RequestBody AvailableParkingLotsRequest parkingLotsRequest) {
+        return reservationService.getAvailableParkingLots(parkingLotsRequest);
     }
 
     /**

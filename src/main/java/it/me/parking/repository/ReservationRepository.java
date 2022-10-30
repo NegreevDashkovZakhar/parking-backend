@@ -25,5 +25,5 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
             "SELECT PL.id FROM parking_lot PL " +
             "INNER JOIN reservation R ON PL.id = R.lot_id " +
             "WHERE R.start_time >= ?1 OR R.end_time <= ?2", nativeQuery = true)
-    List<Long> getFreeParkingLots(Date startTime, Date endTime);
+    List<Long> getAvailableParkingLots(Date startTime, Date endTime);
 }

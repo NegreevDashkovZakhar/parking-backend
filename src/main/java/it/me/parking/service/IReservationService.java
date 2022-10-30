@@ -2,7 +2,7 @@ package it.me.parking.service;
 
 import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
-import it.me.parking.model.request.FreeParkingLotsRequest;
+import it.me.parking.model.request.AvailableParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
 import it.me.parking.model.response.ReservationBillResponse;
 
@@ -52,10 +52,10 @@ public interface IReservationService {
     /**
      * Method getting available parking lots for specified time
      *
-     * @param freeParkingLotsRequest request with specified time to search available parking lots
+     * @param availableParkingLotsRequest request with specified time to search available parking lots
      * @return available parking lots for specified time
      */
-    List<ParkingLot> getFreeParkingLots(FreeParkingLotsRequest freeParkingLotsRequest);
+    List<ParkingLot> getAvailableParkingLots(AvailableParkingLotsRequest availableParkingLotsRequest);
 
     /**
      * Method getting bill for specified reservation

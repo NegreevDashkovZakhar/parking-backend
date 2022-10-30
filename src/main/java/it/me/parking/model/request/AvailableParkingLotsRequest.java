@@ -5,14 +5,14 @@ import java.util.Date;
 /**
  * Request class containing data to get available parking lots for specific time
  */
-public class FreeParkingLotsRequest {
+public class AvailableParkingLotsRequest {
     private Date startTime;
     private Date endTime;
 
     /**
      * Empty constructor
      */
-    public FreeParkingLotsRequest() {
+    public AvailableParkingLotsRequest() {
     }
 
     /**
@@ -21,7 +21,7 @@ public class FreeParkingLotsRequest {
      * @param startTime start time for future reservation
      * @param endTime   end time for future reservation
      */
-    public FreeParkingLotsRequest(Date startTime, Date endTime) {
+    public AvailableParkingLotsRequest(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
