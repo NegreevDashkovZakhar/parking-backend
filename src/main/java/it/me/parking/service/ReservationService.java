@@ -102,10 +102,15 @@ public class ReservationService implements IReservationService {
     }
 
     private void validateRequest(ReservationRequest reservationRequest) {
-        int startTimeSeconds = (int) (reservationRequest.getStartTime().getTime() % 60000);
-        int endTimeSeconds = (int) (reservationRequest.getEndTime().getTime() % 60000);
+        long startingTime = reservationRequest.getStartTime().getTime();
+        long endingTime = reservationRequest.getEndTime().getTime();
+        int startTimeSeconds = (int) (startingTime % 60000);
+        int endTimeSeconds = (int) (endingTime % 60000);
         if (startTimeSeconds != 0 || endTimeSeconds != 0)
             throw new InvalidRequestHttpException("Reservation time must not contain seconds time");
+        if (startingTime >= endingTime) {
+            throw new InvalidRequestHttpException("Reservation starting time must go after ending time");
+        }
     }
 
     private boolean isAvailableForReservation(ReservationRequest reservationRequest) {
