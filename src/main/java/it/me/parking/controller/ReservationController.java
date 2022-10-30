@@ -3,8 +3,11 @@ package it.me.parking.controller;
 import it.me.parking.exception.AlreadyExistsHttpException;
 import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.exception.NotFoundHttpException;
+import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
+import it.me.parking.model.request.AvailableParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.service.IReservationService;
 import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -51,7 +55,7 @@ public class ReservationController {
      * @return reservation entity with specified id
      */
     @GetMapping(path = "/reservations/{id}")
-    public Reservation getReservationById(@PathVariable Long id) {
+    public Reservation getReservationById(@PathVariable long id) {
         try {
             return reservationService.getReservationById(id);
         } catch (NoSuchElementException e) {
@@ -66,7 +70,7 @@ public class ReservationController {
      * @param newReservationData object containing new properties for the reservation
      */
     @PutMapping(path = "/reservations/{id}")
-    public void updateReservation(@PathVariable Long id,
+    public void updateReservation(@PathVariable long id,
                                   @RequestBody ReservationRequest newReservationData) {
         try {
             reservationService.updateReservation(id, newReservationData);
@@ -83,7 +87,7 @@ public class ReservationController {
      * @param id id of the reservation
      */
     @DeleteMapping(path = "/reservations/{id}")
-    public void deleteCarById(@PathVariable Long id) {
+    public void deleteCarById(@PathVariable long id) {
         try {
             reservationService.deleteReservationById(id);
         } catch (NoSuchElementException e) {
@@ -104,6 +108,32 @@ public class ReservationController {
             throw new InvalidRequestHttpException(e);
         } catch (DataIntegrityViolationException e) {
             throw new AlreadyExistsHttpException(e);
+        }
+    }
+
+    /**
+     * Method getting available parking lots for specific time
+     *
+     * @param parkingLotsRequest request specifying time to find available parking lots
+     * @return available parking lots for specific time
+     */
+    @GetMapping(path = "/reservations/available")
+    public List<ParkingLot> getAvailableParkingLots(@RequestBody AvailableParkingLotsRequest parkingLotsRequest) {
+        return reservationService.getAvailableParkingLots(parkingLotsRequest);
+    }
+
+    /**
+     * Method getting bill for specified reservation
+     *
+     * @param id id of the reservation
+     * @return bill for specified reservation
+     */
+    @GetMapping(path = "reservations/{id}/bill")
+    public ReservationBillResponse getReservationBill(@PathVariable long id) {
+        try {
+            return reservationService.getReservationBill(id);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundHttpException(e);
         }
     }
 }

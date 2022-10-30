@@ -51,7 +51,7 @@ public class CarController {
      * @return car entity with specified id
      */
     @GetMapping(path = "/cars/{id}")
-    public Car getCarById(@PathVariable Long id) {
+    public Car getCarById(@PathVariable long id) {
         try {
             return carService.getCarById(id);
         } catch (NoSuchElementException e) {
@@ -66,7 +66,7 @@ public class CarController {
      * @param newCarData object containing new properties for the car
      */
     @PutMapping(path = "/cars/{id}")
-    public void updateCar(@PathVariable Long id,
+    public void updateCar(@PathVariable long id,
                           @RequestBody CarRequest newCarData) {
         try {
             carService.updateCar(id, newCarData);
@@ -83,7 +83,7 @@ public class CarController {
      * @param id id of the car
      */
     @DeleteMapping(path = "/cars/{id}")
-    public void deleteCarById(@PathVariable Long id) {
+    public void deleteCarById(@PathVariable long id) {
         try {
             carService.deleteCarById(id);
         } catch (NoSuchElementException e) {

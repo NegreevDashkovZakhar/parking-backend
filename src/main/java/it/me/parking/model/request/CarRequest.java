@@ -17,13 +17,14 @@ public class CarRequest {
 
     /**
      * Constructor setting all fields
+     * Modifies license plate number given to be upper case
      *
      * @param licensePlateNumber license plate number of the car
      * @param ownerName          name of the owner of the car
      * @param model              model of the car
      */
     public CarRequest(String licensePlateNumber, String ownerName, String model) {
-        this.licensePlateNumber = licensePlateNumber;
+        this.licensePlateNumber = licensePlateNumber.toUpperCase();
         this.ownerName = ownerName;
         this.model = model;
     }
@@ -32,8 +33,14 @@ public class CarRequest {
         return licensePlateNumber;
     }
 
+    /**
+     * Setter for license plate number
+     * Modifies license plate number to be upper case
+     *
+     * @param licensePlateNumber license plate number of the car
+     */
     public void setLicensePlateNumber(String licensePlateNumber) {
-        this.licensePlateNumber = licensePlateNumber;
+        this.licensePlateNumber = licensePlateNumber.toUpperCase();
     }
 
     public String getOwnerName() {

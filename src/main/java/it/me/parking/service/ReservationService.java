@@ -1,11 +1,18 @@
 package it.me.parking.service;
 
+import it.me.parking.exception.InvalidRequestHttpException;
+import it.me.parking.model.entity.ParkingLot;
 import it.me.parking.model.entity.Reservation;
+import it.me.parking.model.request.AvailableParkingLotsRequest;
 import it.me.parking.model.request.ReservationRequest;
+import it.me.parking.model.response.ReservationBillResponse;
 import it.me.parking.repository.CarRepository;
 import it.me.parking.repository.ParkingLotRepository;
 import it.me.parking.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Default reservation service interface implementation
@@ -38,13 +45,14 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation getReservationById(Long id) {
+    public Reservation getReservationById(long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void updateReservation(Long id, ReservationRequest newReservationData) {
+    public void updateReservation(long id, ReservationRequest newReservationData) {
         Reservation oldReservation = repository.findById(id).orElseThrow();
+        validateRequest(newReservationData);
         oldReservation.setCar(
                 carRepository.findById(newReservationData.getCarId()).orElseThrow()
         );
@@ -57,17 +65,54 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public void deleteReservationById(Long id) {
+    public void deleteReservationById(long id) {
         repository.deleteById(id);
     }
 
     @Override
     public void addReservation(ReservationRequest reservation) {
+        validateRequest(reservation);
+        if (!isAvailableForReservation(reservation)) {
+            throw new InvalidRequestHttpException("Time is already reserved");
+        }
         repository.save(new Reservation(
                 carRepository.findById(reservation.getCarId()).orElseThrow(),
                 lotRepository.findById(reservation.getLotId()).orElseThrow(),
                 reservation.getStartTime(),
                 reservation.getEndTime()
         ));
+    }
+
+    @Override
+    public List<ParkingLot> getAvailableParkingLots(AvailableParkingLotsRequest availableParkingLotsRequest) {
+        List<Long> availableParkingLotsIds = repository.getAvailableParkingLots(
+                availableParkingLotsRequest.getStartTime(),
+                availableParkingLotsRequest.getEndTime()
+        );
+        List<ParkingLot> availableParkingLots = new ArrayList<>();
+        for (Long availableId : availableParkingLotsIds) {
+            availableParkingLots.add(lotRepository.findById(availableId).orElseThrow());
+        }
+        return availableParkingLots;
+    }
+
+    @Override
+    public ReservationBillResponse getReservationBill(long id) {
+        return new ReservationBillResponse(repository.findById(id).orElseThrow());
+    }
+
+    private void validateRequest(ReservationRequest reservationRequest) {
+        int startTimeSeconds = (int) (reservationRequest.getStartTime().getTime() % 60000);
+        int endTimeSeconds = (int) (reservationRequest.getEndTime().getTime() % 60000);
+        if (startTimeSeconds != 0 || endTimeSeconds != 0)
+            throw new InvalidRequestHttpException("Reservation time must not contain seconds time");
+    }
+
+    private boolean isAvailableForReservation(ReservationRequest reservationRequest) {
+        List<Long> availableParkingLotsIds = repository.getAvailableParkingLots(
+                reservationRequest.getStartTime(),
+                reservationRequest.getEndTime()
+        );
+        return availableParkingLotsIds.contains(reservationRequest.getLotId());
     }
 }

@@ -1,11 +1,13 @@
 package it.me.parking.service;
 
+import it.me.parking.exception.InvalidRequestHttpException;
 import it.me.parking.model.entity.Car;
 import it.me.parking.model.request.CarRequest;
 import it.me.parking.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 /**
  * Default car service interface implementation
@@ -31,12 +33,15 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public Car getCarById(long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void updateCar(Long id, CarRequest newCarData) {
+    public void updateCar(long id, CarRequest newCarData) {
+        if (!isValidLicensePlateNumber(newCarData.getLicensePlateNumber())) {
+            throw new InvalidRequestHttpException("Invalid license plate number");
+        }
         Car oldCar = repository.findById(id).orElseThrow();
         oldCar.setModel(newCarData.getModel());
         oldCar.setLicensePlateNumber(newCarData.getLicensePlateNumber());
@@ -45,7 +50,7 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public void deleteCarById(Long id) {
+    public void deleteCarById(long id) {
         repository.deleteById(id);
     }
 
@@ -60,10 +65,17 @@ public class CarService implements ICarService {
 
     @Override
     public void addCar(CarRequest car) {
+        if (!isValidLicensePlateNumber(car.getLicensePlateNumber())) {
+            throw new InvalidRequestHttpException("Invalid license plate number");
+        }
         repository.save(new Car(
                 car.getLicensePlateNumber(),
                 car.getOwnerName(),
                 car.getModel()
         ));
+    }
+
+    private boolean isValidLicensePlateNumber(String licensePlateNumber) {
+        return Pattern.matches("[А-Я][А-Я]\\d\\d\\d[А-Я]", licensePlateNumber);
     }
 }

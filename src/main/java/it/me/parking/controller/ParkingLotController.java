@@ -51,7 +51,7 @@ public class ParkingLotController {
      * @return parking lot entity with specified id
      */
     @GetMapping(path = "/parking-lots/{id}")
-    public ParkingLot getParkingLotById(@PathVariable Long id) {
+    public ParkingLot getParkingLotById(@PathVariable long id) {
         try {
             return parkingLotService.getParkingLotById(id);
         } catch (NoSuchElementException e) {
@@ -66,7 +66,7 @@ public class ParkingLotController {
      * @param newParkingLotData object containing new properties for the parking lot
      */
     @PutMapping(path = "/parking-lots/{id}")
-    public void updateParkingLot(@PathVariable Long id,
+    public void updateParkingLot(@PathVariable long id,
                                  @RequestBody ParkingLotRequest newParkingLotData) {
         try {
             parkingLotService.updateParkingLot(id, newParkingLotData);
@@ -83,7 +83,7 @@ public class ParkingLotController {
      * @param id id of the parking lot
      */
     @DeleteMapping(path = "/parking-lots/{id}")
-    public void deleteParkingLotById(@PathVariable Long id) {
+    public void deleteParkingLotById(@PathVariable long id) {
         try {
             parkingLotService.deleteParkingLotById(id);
         } catch (NoSuchElementException e) {

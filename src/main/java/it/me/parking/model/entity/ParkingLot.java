@@ -1,17 +1,20 @@
 package it.me.parking.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 /**
  * Class representing Parking lot in database
  */
 @Entity
+@Table(name = "parking_lot")
 public class ParkingLot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,7 @@ public class ParkingLot {
     @Column(nullable = false)
     private Long hourPrice;
 
-    @OneToMany(mappedBy = "lot")
+    @OneToMany(mappedBy = "lot", cascade = CascadeType.REMOVE)
     private Set<Reservation> reservations;
 
     /**
